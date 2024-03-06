@@ -5,7 +5,6 @@ import time
 
 tab1, tab2 = st.tabs(["DeepFake", "Logs"])
 log_file_path = "/content/logs.txt"
-log_text_key = "log_text_area"
 
 with tab1:
     image_input = st.text_input("enter input image name ")
@@ -44,7 +43,8 @@ with tab2:
             log_content = read_log_file()
 
             # Use st.text_area with a single key for the text area
-            st.text_area("Log Content", log_content, height=200, key=log_file_path)
+            dynamic_key = f"{log_text_key}_{int(time.time())}"
+            st.text_area("Log Content", log_content, height=200, key=dynamic_key)
             
             # Sleep for a short interval (e.g., 1 second) before updating again
             time.sleep(1)
