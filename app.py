@@ -31,7 +31,7 @@ with tab1:
           subprocess.run(normal, shell=True)
 with tab2:
     
-    def read_log_file():
+    def read_logs():
         with open(log_file_path, 'r') as file:
             content = file.read()
         return content
