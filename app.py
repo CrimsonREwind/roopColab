@@ -5,6 +5,7 @@ import time
 
 tab1, tab2 = st.tabs(["DeepFake", "Logs"])
 log_file_path = "/content/logs.txt"
+log_text_key = "log"
 
 with tab1:
     image_input = st.text_input("enter input image name ")
