@@ -40,12 +40,14 @@ with tab2:
     
     while True:
         try:
-            # Read and display the content of the log file
-            log_content = read_log_file()
+            # Read logs from the file or another source
+            log_content = read_logs(log_file_path)
 
-            # Use st.text_area with a unique key
-            st.text_area(f"Log Content: {log_text_key}", log_content, key=log_text_key)
-            
+            # Display logs in the corresponding log area
+            with log_area:
+                st.subheader("Real-Time Log")
+                st.text_area("Log Content", log_content, height=200, key=log_file_path)
+
             # Sleep for a short interval (e.g., 1 second) before updating again
             time.sleep(1)
         except FileNotFoundError:
