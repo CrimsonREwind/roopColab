@@ -24,7 +24,6 @@ with tab1:
         os.chdir(new_directory)
         normal = f'python run.py -s {input_a} -t {input_b} -o {output} --keep-frames --keep-fps --execution-provider cuda --frame-processor face_swapper face_enhancer'
         enhanced = f'python run.py -s {input_a} -t {input_b} -o {output} --keep-frames --keep-fps --execution-provider cuda --frame-processor face_swapper'
-        subprocess.run(command, shell=True)
 
         if checkbox_result:
           subprocess.run(enhanced, shell=True)
