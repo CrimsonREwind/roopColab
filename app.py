@@ -45,7 +45,7 @@ with tab2:
             log_content = read_log_file()
 
             # Use st.text_area with a single key for the text area
-            st.text_area(f"Log Content: {log_text_key}", log_content, key=log_text_key)
+            st.text_area(log_content)
             
             # Sleep for a short interval (e.g., 1 second) before updating again
             time.sleep(1)
