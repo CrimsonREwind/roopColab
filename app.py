@@ -5,6 +5,7 @@ import time
 
 tab1, tab2 = st.tabs(["DeepFake", "Logs"])
 log_file_path = "/content/logs.txt"
+log_text_key = "log_text_area"
 
 with tab1:
     image_input = st.text_input("enter input image name ")
@@ -31,7 +32,7 @@ with tab1:
           subprocess.run(normal, shell=True)
 with tab2:
     
-    def read_logs():
+    def read_log_file():
         with open(log_file_path, 'r') as file:
             content = file.read()
         return content
@@ -40,14 +41,12 @@ with tab2:
     
     while True:
         try:
-            # Read logs from the file or another source
-            log_content = read_logs(log_file_path)
+            # Read and display the content of the log file
+            log_content = read_log_file()
 
-            # Display logs in the corresponding log area
-            with log_area:
-                st.subheader("Real-Time Log")
-                st.text_area("Log Content", log_content, height=200, key=log_file_path)
-
+            # Use st.text_area with a single key for the text area
+            st.text_area(f"Log Content: {log_text_key}", log_content, key=log_text_key)
+            
             # Sleep for a short interval (e.g., 1 second) before updating again
             time.sleep(1)
         except FileNotFoundError:
