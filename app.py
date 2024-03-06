@@ -30,22 +30,24 @@ with tab1:
         else:
           subprocess.run(normal, shell=True)
 with tab2:
+    
     def read_log_file():
-        with open(log_file_path, 'r') as file:
-            content = file.read()
-        return content
+    with open(log_file_path, 'r') as file:
+        content = file.read()
+    return content
+    
     st.title("Real-Time Log Viewer")
-
+    
     while True:
         try:
             # Read and display the content of the log file
             log_content = read_log_file()
-            st.text_area("Log Content:", log_content)
+
+            # Use st.text_area with a unique key
+            st.text_area(f"Log Content: {log_text_key}", log_content, key=log_text_key)
             
             # Sleep for a short interval (e.g., 1 second) before updating again
             time.sleep(1)
         except FileNotFoundError:
             st.error(f"File not found: {log_file_path}")
             break
-    
-    
