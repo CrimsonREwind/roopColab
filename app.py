@@ -56,13 +56,8 @@ with tab1:
           subprocess.run(normal, shell=True)
 with tab2:
     
-    def read_log_file():
-        with open(log_file_path, 'r') as file:
-            content = file.read()
-        return content
-    
     st.title("Real-Time Log Viewer")
-    
+
     def tail_log_file(log_file_path):
         # Open the file in read mode
         with open(log_file_path, "r") as log_file:
