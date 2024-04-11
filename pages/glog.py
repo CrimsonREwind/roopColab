@@ -3,7 +3,7 @@ import time
 
 st.title("Real-Time Log Viewer")
 
-log_file_path = "/kaggle/working/roop/logs.txt"
+log_file_path = "/content/roop/logs.txt"
 def tail_log_file(log_file_path):
     # Open the file in read mode
     with open(log_file_path, "r") as log_file:
