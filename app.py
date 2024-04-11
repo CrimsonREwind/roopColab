@@ -3,8 +3,10 @@ import os
 import subprocess
 import time
 
+current_path = os.getcwd()
+
 tab1, tab2 = st.tabs(["DeepFake", "Logs"])
-log_file_path = "/content/logs.txt"
+log_file_path = f"{current_path}/roop/logs.txt"
 log_text_key = "log"
 
 with tab1:
@@ -17,10 +19,10 @@ with tab1:
 
 
     if st.button("run"):
-        input_a = "/content/roop/input/" + image_input
-        input_b = "/content/roop/input/" + video_input
-        output = "/content/roop/output/" + video_output
-        new_directory = '/content/roop'
+        input_a = f"{current_path}/roop/input/{image_input}"
+        input_b = f"{current_path}/roop/input/{video_input}"
+        output = f"{current_path}/roop/output/{video_output}"
+        new_directory = f'{current_path}/roop'
         os.chdir(new_directory)
         normal = f'python run.py -s {input_a} -t {input_b} -o {output} --keep-frames --keep-fps --execution-provider cuda --frame-processor face_swapper face_enhancer'
         enhanced = f'python run.py -s {input_a} -t {input_b} -o {output} --keep-frames --keep-fps --execution-provider cuda --frame-processor face_swapper'
