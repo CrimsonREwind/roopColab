@@ -3,23 +3,23 @@ import os
 import subprocess
 import time
 
-current_path = os.getcwd()
+script_dir = os.path.dirname(os.path.realpath(__file__))
 
 tab1, tab2 = st.tabs(["DeepFake", "Logs"])
-log_file_path = f"{current_path}/roop/logs.txt"
+log_file_path = f"{script_dir}/logs.txt"
 log_text_key = "log"
 
-if not os.path.exists(os.path.join(current_path, "roop", "input")):
-    os.makedirs(os.path.join(current_path, "roop", "input"))
+if not os.path.exists(os.path.join(script_dir, "input")):
+    os.makedirs(os.path.join(script_dir, "input"))
 
 def save_uploaded_file(uploaded_file):
     # Save the file to the "uploads" folder
-    with open(os.path.join(current_path, "roop", "input", uploaded_file.name), "wb") as f:
+    with open(os.path.join(script_dir, "input", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
 
 def get_uploaded_filenames():
     # Get the list of files in the "uploads" folder
-    files = os.listdir(os.path.join(current_path, "roop", "input"))
+    files = os.listdir(os.path.join(script_dir, "input"))
     return files
 
 with tab1:
@@ -42,10 +42,10 @@ with tab1:
 
 
     if st.button("run"):
-        input_a = f"{current_path}/roop/input/{image_input}"
-        input_b = f"{current_path}/roop/input/{video_input}"
-        output = f"{current_path}/roop/output/{video_output}"
-        new_directory = f'{current_path}/roop'
+        input_a = f"{script_dir}/input/{image_input}"
+        input_b = f"{script_dir}/input/{video_input}"
+        output = f"{script_dir}/output/{video_output}"
+        new_directory = f'{script_dir}'
         os.chdir(new_directory)
         normal = f'python run.py -s {input_a} -t {input_b} -o {output} --keep-frames --keep-fps --execution-provider cuda --frame-processor face_swapper face_enhancer'
         enhanced = f'python run.py -s {input_a} -t {input_b} -o {output} --keep-frames --keep-fps --execution-provider cuda --frame-processor face_swapper'
