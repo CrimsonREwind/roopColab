@@ -11,12 +11,10 @@ log_text_key = "log"
 
 if not os.path.exists(os.path.join(script_dir, "input")):
     os.makedirs(os.path.join(script_dir, "input"))
-
 def save_uploaded_file(uploaded_file):
     # Save the file to the "uploads" folder
     with open(os.path.join(script_dir, "input", uploaded_file.name), "wb") as f:
         f.write(uploaded_file.getbuffer())
-
 def get_uploaded_filenames():
     # Get the list of files in the "uploads" folder
     files = os.listdir(os.path.join(script_dir, "input"))
@@ -37,9 +35,10 @@ with tab1:
     video_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_video")
     video_output = st.text_input("enter output video name ")
 
-
-    checkbox_result = st.checkbox("run script")
-
+    genre = st.radio(
+        "Select processing type",
+        ["Normal", "Enhanced"],
+        captions=["Normal deepfake", "Enhanced deepfake"])
 
     if st.button("run"):
         input_a = f"{script_dir}/input/{image_input}"
@@ -49,11 +48,11 @@ with tab1:
         os.chdir(new_directory)
         normal = f'python run.py -s {input_a} -t {input_b} -o {output} --keep-frames --keep-fps --execution-provider cuda --frame-processor face_swapper face_enhancer'
         enhanced = f'python run.py -s {input_a} -t {input_b} -o {output} --keep-frames --keep-fps --execution-provider cuda --frame-processor face_swapper'
+        if genre == 'Normal':
+            subprocess.run(normal, shell=True)
+        if genre == 'Enhanced':
+            subprocess.run(enhanced, shell=True)
 
-        if checkbox_result:
-          subprocess.run(enhanced, shell=True)
-        else:
-          subprocess.run(normal, shell=True)
 with tab2:
     
     st.title("Real-Time Log Viewer")
