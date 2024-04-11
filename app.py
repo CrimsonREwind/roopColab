@@ -63,17 +63,23 @@ with tab2:
     
     st.title("Real-Time Log Viewer")
     
-    while True:
-        try:
-            # Read and display the content of the log file
-            log_content = read_log_file()
+    def tail_log_file(log_file_path):
+        # Open the file in read mode
+        with open(log_file_path, "r") as log_file:
+            # Read the initial lines, if any
+            lines = log_file.readlines()
+            for line in lines:
+                st.text(line.strip())
 
-            # Use st.text_area with a single key for the text area
-            dynamic_key = f"{log_text_key}_{int(time.time())}"
-            st.text_area("Log Content", log_content, height=200, key=dynamic_key)
-            
-            # Sleep for a short interval (e.g., 1 second) before updating again
-            time.sleep(1)
-        except FileNotFoundError:
-            st.error(f"File not found: {log_file_path}")
-            break
+            # Continuously read new lines
+            while True:
+                where = log_file.tell()  # Get current file position
+                line = log_file.readline()
+                if not line:
+                    time.sleep(1)  # Wait for new data
+                    log_file.seek(where)  # Go back to the file's current position
+                else:
+                    st.text(line.strip())
+
+
+    tail_log_file(log_file_path)
