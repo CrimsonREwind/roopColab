@@ -34,6 +34,9 @@ with tab1:
     image_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_image")
     video_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_video")
     video_output = st.text_input("enter output video name ")
+    video_file = open(f"{script_dir}/output/{video_output}", 'rb')
+    video_bytes = video_file.read()
+
 
     genre = st.radio(
         "Select processing type",
@@ -52,6 +55,11 @@ with tab1:
             subprocess.run(normal, shell=True)
         if genre == 'Enhanced':
             subprocess.run(enhanced, shell=True)
+        if os.path.exists(os.path.join(script_dir, "output", video_output)):
+            st.video(video_bytes)
+
+
+
 
 with tab2:
     
