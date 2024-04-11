@@ -1,0 +1,134 @@
+{
+  "cells": [
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "pNWnohNADDip"
+      },
+      "outputs": [],
+      "source": [
+        "#@markdown # Install Repo\n",
+        "import shutil\n",
+        "import ipywidgets as widgets\n",
+        "import os\n",
+        "current_path = os.getcwd()\n",
+        "log_file_path = os.path.join(current_path, \"roop\",\"logs.txt\")\n",
+        "def inf(msg, style, wdth): inf = widgets.Button(description=msg, disabled=True, button_style=style, layout=widgets.Layout(min_width=wdth));display(inf)\n",
+        "if os.path.exists(os.path.join(current_path, \"roopColab\")):\n",
+        "    shutil.rmtree(os.path.join(current_path, \"roopColab\"))\n",
+        "if os.path.exists(os.path.join(current_path, \"roop\")):\n",
+        "    shutil.rmtree(os.path.join(current_path, \"roop\"))\n",
+        "%cd current_path/\n",
+        "!git clone https://github.com/s0md3v/roop\n",
+        "!git clone https://github.com/CrimsonREwind/roopColab\n",
+        "!touch {log_file_path}\n",
+        "print(\"CHECK FOR ANY ERROR\")\n",
+        "inf('\\u2714 Execution Finished','success', '50px')\n"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "OmyQa-glDFtt"
+      },
+      "outputs": [],
+      "source": [
+        "#@markdown # Requirements\n",
+        "import ipywidgets as widgets\n",
+        "import os\n",
+        "current_path = os.getcwd()\n",
+        "def inf(msg, style, wdth): inf = widgets.Button(description=msg, disabled=True, button_style=style, layout=widgets.Layout(min_width=wdth));display(inf)\n",
+        "if not os.path.exists(os.path.join(current_path, \"roop\", \"input\")):\n",
+        "    os.makedirs(os.path.join(current_path, \"roop\", \"input\"))\n",
+        "if not os.path.exists(os.path.join(current_path, \"roop\", \"output\")):\n",
+        "    os.makedirs(os.path.join(current_path, \"roop\", \"output\"))\n",
+        "if not os.path.exists(os.path.join(current_path, \"roop\", \"models\")):\n",
+        "    os.makedirs(os.path.join(current_path, \"roop\", \"models\"))\n",
+        "%cd {os.path.join(current_path, \"roop\")}\n",
+        "!pip install onnxruntime-gpu && pip install -r requirements.txt\n",
+        "!pip install -q streamlit\n",
+        "print(\"CHECK FOR ANY ERROR\")\n",
+        "inf('\\u2714 Execution Finished','success', '50px')"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "OIZFTMqNDLip"
+      },
+      "outputs": [],
+      "source": [
+        "#@markdown # Download model\n",
+        "import time\n",
+        "import ipywidgets as widgets\n",
+        "import os\n",
+        "def inf(msg, style, wdth): inf = widgets.Button(description=msg, disabled=True, button_style=style, layout=widgets.Layout(min_width=wdth));display(inf)\n",
+        "if not os.path.exists(os.path.join(current_path, \"roop\", \"models\")):\n",
+        "    os.makedirs(os.path.join(current_path, \"roop\", \"models\"))\n",
+        "if not os.path.exists(os.path.join(current_path, \"roop\", \"pages\")):\n",
+        "    os.makedirs(os.path.join(current_path, \"roop\", \"pages\"))\n",
+        "!cp {current_path}/roopColab/app.py {current_path}/roop/\n",
+        "!cp {current_path}/roopColab/pages/klog.py {current_path}/roop/pages/\n",
+        "if not os.path.exists(os.path.join(current_path, \"roop\", \"models\",\"inswapper_128.onnx\")):\n",
+        "    os.chdir(os.path.join(current_path, \"roop\", \"models\"))\n",
+        "    !wget https://huggingface.co/CrimsonREwind/Deepinsightinswapper/resolve/main/inswapper_128.onnx\n",
+        "print(\"CHECK FOR ANY ERROR\")\n",
+        "inf('\\u2714 Execution Finished','success', '50px')"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "id": "xDoI4q6bDN04"
+      },
+      "outputs": [],
+      "source": [
+        "#@markdown # Tunnel password\n",
+        "!curl https://loca.lt/mytunnelpassword"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "cellView": "form",
+        "colab": {
+          "background_save": true
+        },
+        "id": "9cDrAM4_DOmZ"
+      },
+      "outputs": [],
+      "source": [
+        "#@markdown # Start Webapp\n",
+        "import streamlit as st\n",
+        "%cd {os.path.join(current_path, \"roop\")}\n",
+        "!npm install localtunnel\n",
+        "!streamlit run app.py &>{log_file_path} & npx localtunnel --port 8501"
+      ]
+    }
+  ],
+  "metadata": {
+    "accelerator": "GPU",
+    "colab": {
+      "gpuType": "T4",
+      "provenance": []
+    },
+    "kernelspec": {
+      "display_name": "Python 3",
+      "name": "python3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
