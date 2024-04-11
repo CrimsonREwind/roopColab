@@ -9,9 +9,32 @@ tab1, tab2 = st.tabs(["DeepFake", "Logs"])
 log_file_path = f"{current_path}/roop/logs.txt"
 log_text_key = "log"
 
+if not os.path.exists(os.path.join(current_path, "roop", "input")):
+    os.makedirs(os.path.join(current_path, "roop", "input"))
+
+def save_uploaded_file(uploaded_file):
+    # Save the file to the "uploads" folder
+    with open(os.path.join(current_path, "roop", "input", uploaded_file.name), "wb") as f:
+        f.write(uploaded_file.getbuffer())
+
+def get_uploaded_filenames():
+    # Get the list of files in the "uploads" folder
+    files = os.listdir(os.path.join(current_path, "roop", "input"))
+    return files
+
 with tab1:
-    image_input = st.text_input("enter input image name ")
-    video_input = st.text_input("enter input video name ")
+    uploaded_files = st.file_uploader("Choose files to upload", accept_multiple_files=True)
+    if uploaded_files:
+        st.write("### Uploaded Files:")
+        for file in uploaded_files:
+            file_details = {"filename": file.name, "filetype": file.type, "filesize": file.size}
+            st.write(file_details)
+
+            # Save the file to a folder
+            save_uploaded_file(file)
+
+    image_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_image")
+    video_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_video")
     video_output = st.text_input("enter output video name ")
 
 
