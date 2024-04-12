@@ -19,6 +19,11 @@ def get_uploaded_filenames():
     # Get the list of files in the "uploads" folder
     files = os.listdir(os.path.join(script_dir, "input"))
     return files
+def videoplay():
+    video_file = open(f"{script_dir}/output/{video_output}", 'rb')
+    video_bytes = video_file.read()
+    if os.path.exists(os.path.join(script_dir, "output", video_output)):
+        st.video(video_bytes)
 
 with tab1:
     uploaded_files = st.file_uploader("Choose files to upload", accept_multiple_files=True)
@@ -34,8 +39,7 @@ with tab1:
     image_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_image")
     video_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_video")
     video_output = st.text_input("enter output video name ")
-    video_file = open(f"{script_dir}/output/{video_output}", 'rb')
-    video_bytes = video_file.read()
+
 
 
     genre = st.radio(
@@ -55,8 +59,7 @@ with tab1:
             subprocess.run(normal, shell=True)
         if genre == 'Enhanced':
             subprocess.run(enhanced, shell=True)
-        if os.path.exists(os.path.join(script_dir, "output", video_output)):
-            st.video(video_bytes)
+        videoplay()
 
 
 
