@@ -36,9 +36,9 @@ with tab1:
             # Save the file to a folder
             save_uploaded_file(file)
 
-    image_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_image")
-    video_input = st.selectbox("Choose a file", get_uploaded_filenames(), key="input_video")
-    video_output = st.text_input("enter output video name ")
+    image_input = st.selectbox("choose a file", get_uploaded_filenames(), key="input_image")
+    video_input = st.selectbox("chooose a file", get_uploaded_filenames(), key="input_video")
+    video_output = st.text_input("enter output file name with extension")
 
 
 
